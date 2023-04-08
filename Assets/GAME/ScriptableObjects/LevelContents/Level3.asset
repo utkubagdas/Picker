@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 160147f8edecdf7479b6d628e30e8e08, type: 3}
-  m_Name: TestLevel
+  m_Name: Level3
   m_EditorClassIdentifier: 
-  LevelFacade: {fileID: 6913584976528658200, guid: c5955731f16ccce41be081ebb13dd75b,
+  LevelFacade: {fileID: 830102596351524190, guid: 055c792d2ca6af64992a9e310ba7bea8,
     type: 3}
   LightingSettings: {fileID: 11400000, guid: 3a21d39e1d4fc2545b5fee3bef58f08d, type: 2}

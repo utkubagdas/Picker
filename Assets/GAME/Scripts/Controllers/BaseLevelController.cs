@@ -274,10 +274,11 @@ public class BaseLevelController : BaseController
             levelsToRepeat.Remove(allLevels[index]);
         }
 
+        Debug.Log("index " + index);
         var tempLevel = allLevels[index];
         allLevels.RemoveAt(index);
-        AssetDatabase.DeleteAsset(AssetDatabase.GetAssetPath(tempLevel.LevelFacade));
         AssetDatabase.DeleteAsset(AssetDatabase.GetAssetPath(tempLevel));
+        AssetDatabase.DeleteAsset(AssetDatabase.GetAssetPath(tempLevel.LevelFacade));
     }
     public List<string> GetLevelList()
     {

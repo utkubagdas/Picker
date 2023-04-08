@@ -34,7 +34,8 @@ public class Consts : MonoBehaviour
         public const string CollectableSpherePrefabName = "CollectableSphere";
         public const string CollectableCylinderPrefabName = "CollectableCylinder";
         public const string CollectableCapsulePrefabName = "CollectableCapsule";
-        public const string LEVELSPATH = "Assets/GAME/Prefabs/Levels/";
+        public const string LEVELFACADESPATH = "Assets/GAME/Prefabs/Levels/";
+        public const string LEVELCONTENTSPATH = "Assets/GAME/ScriptableObjects/LevelContents/";
     }
 
     public struct AnimatorKeywords
