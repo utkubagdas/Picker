@@ -369,7 +369,7 @@ public class LevelEditor : EditorWindow
                 if (GUILayout.Button("Create Level"))
                 {
                     GameObject player = PrefabUtility.InstantiatePrefab(
-                        AssetDatabase.LoadAssetAtPath<GameObject>("Assets/GAME/Prefabs/Player/PlayerParent.prefab"), _levelHolder.transform) as GameObject;
+                        AssetDatabase.LoadAssetAtPath<GameObject>(Consts.LevelEditorSettings.PLAYERPREFABPATH), _levelHolder.transform) as GameObject;
                     player.transform.position = new Vector3(0, 0.073f, 3f);
                     
                     GameObject levelPrefab =

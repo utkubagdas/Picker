@@ -36,6 +36,7 @@ public class Consts : MonoBehaviour
         public const string CollectableCapsulePrefabName = "CollectableCapsule";
         public const string LEVELFACADESPATH = "Assets/GAME/Prefabs/Levels/";
         public const string LEVELCONTENTSPATH = "Assets/GAME/ScriptableObjects/LevelContents/";
+        public const string PLAYERPREFABPATH = "Assets/GAME/Prefabs/Player/PlayerParent.prefab";
     }
 
     public struct AnimatorKeywords
