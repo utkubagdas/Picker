@@ -35,13 +35,13 @@ public class LevelController : BaseLevelController
     {
         _levelFacade = InstantiateAsDestroyable<LevelFacade>(LevelContent.LevelFacade);
         ResetStaticVariables();
-        // _player = Instantiate(player.gameObject,_levelFacade.PlayerSpawnPoint.position,player.transform.rotation, _levelFacade.transform);
-        //this is the place where you should add your in-game logic such as instantiating player etc.
-        // Transform target = _player.transform;
-        // if (target != null)
-        // {
-        //     ControllerHub.Get<CameraManager>().Init(target);
-        // }
+        _player = _levelFacade.Player;
+            //this is the place where you should add your in-game logic such as instantiating player etc.
+         Transform target = _player.transform;
+         if (target != null)
+         {
+             ControllerHub.Get<CameraManager>().Init(target);
+         }
         EventManager.LevelStartEvent.Invoke();
         SendLevelLoadedEvent(_levelFacade);
     }

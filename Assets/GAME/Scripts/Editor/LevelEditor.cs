@@ -189,6 +189,7 @@ public class LevelEditor : EditorWindow
                         var dropArea = gameObject.GetComponent<DropAreaController>();
                         gameObject.transform.position = Vector3.forward * _offset;
                         dropArea.DesiredDropCountText.SetText(_desiredDropCount.ToString());
+                        dropArea.DesiredCount = _desiredDropCount;
                         _offset += gameObject.GetComponentInChildren<MeshRenderer>().bounds.size.z;
                         _allRoads.Add(gameObject);
                     } 
@@ -371,13 +372,17 @@ public class LevelEditor : EditorWindow
                     GameObject player = PrefabUtility.InstantiatePrefab(
                         AssetDatabase.LoadAssetAtPath<GameObject>(Consts.LevelEditorSettings.PLAYERPREFABPATH), _levelHolder.transform) as GameObject;
                     player.transform.position = new Vector3(0, 0.073f, 3f);
+                    LevelFacade levelFacade = _levelHolder.AddComponent<LevelFacade>();
+                    levelFacade.Player = player;
+                    
                     
                     GameObject levelPrefab =
                         PrefabUtility.SaveAsPrefabAsset(_levelHolder, Consts.LevelEditorSettings.LEVELFACADESPATH + "Level" + (_levelController.GetLevelIndex() + 2) + ".prefab");
-                    LevelFacade levelFacade = levelPrefab.AddComponent<LevelFacade>();
+                    LevelFacade levelFacade2 = levelPrefab.GetComponent<LevelFacade>();
+                    
                     
                     LevelContent levelContent = ScriptableObject.CreateInstance<LevelContent>();
-                    levelContent.LevelFacade = levelFacade;
+                    levelContent.LevelFacade = levelFacade2;
                     levelContent.LightingSettings = AssetDatabase.LoadAssetAtPath<LightingSettings>("Assets/GAME/ScriptableObjects/LightingSettings/LightingSettings.asset");
                     AssetDatabase.CreateAsset(levelContent, Consts.LevelEditorSettings.LEVELCONTENTSPATH + "Level" + (_levelController.GetLevelIndex() + 2) + ".asset");
                     AssetDatabase.SaveAssets();
