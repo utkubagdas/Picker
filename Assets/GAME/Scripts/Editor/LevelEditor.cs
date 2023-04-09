@@ -30,7 +30,8 @@ public class LevelEditor : EditorWindow
     private GameObject _shownLevel;
     private int _levelIndex;
     private bool _hasSceneChanged;
-    private Transform _selectedTransform; 
+    private Transform _selectedTransform;
+    private int _dropAreaCount;
     
     
     void OnEnable()
@@ -188,10 +189,11 @@ public class LevelEditor : EditorWindow
                         var gameObject = PrefabUtility.InstantiatePrefab(GetPrefab(_platformType, "DropAreaPlatform"), _levelHolder.transform) as GameObject;
                         var dropArea = gameObject.GetComponent<DropAreaController>();
                         gameObject.transform.position = Vector3.forward * _offset;
-                        dropArea.DesiredDropCountText.SetText(_desiredDropCount.ToString());
-                        dropArea.DesiredCount = _desiredDropCount;
+                        dropArea.SetDesiredDropCountText(_desiredDropCount);
+                        dropArea.SetDesiredCount(_desiredDropCount);
                         _offset += gameObject.GetComponentInChildren<MeshRenderer>().bounds.size.z;
                         _allRoads.Add(gameObject);
+                        _dropAreaCount++;
                     } 
                 }
                 else if (_platformType == PlatformType.LevelEndPlatform)
@@ -354,7 +356,7 @@ public class LevelEditor : EditorWindow
                 }
             }
 
-            if (_allRoads.Count > 0 && _platforms.Count > 0 && _collectables.Count > 0 && _hasLevelEnd)
+            if (_allRoads.Count > 0 && _platforms.Count > 0 && _collectables.Count > 0 && _hasLevelEnd && _dropAreaCount == 3)
             {
                 GUILayout.BeginVertical("Box");
                 GUI.color = Color.red;
@@ -398,7 +400,7 @@ public class LevelEditor : EditorWindow
             else
             {
                 GUILayout.Space(20);
-                EditorGUILayout.HelpBox("To create a level, you need to add a straight platform, level end platform and collectables.", MessageType.Info);
+                EditorGUILayout.HelpBox("To create a level, you need to add a straight platform, level end platform, 3 drop area platform and collectables.", MessageType.Info);
             }
             
             GUILayout.EndArea();

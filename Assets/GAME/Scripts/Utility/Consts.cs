@@ -23,7 +23,7 @@ public class Consts : MonoBehaviour
     
     public struct Tags
     {
-       
+        public const string FINISHLINE = "FinishLine";
     }
 
     public struct LevelEditorSettings

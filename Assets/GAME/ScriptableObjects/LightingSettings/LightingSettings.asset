@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ece37782197f8244a8b89138b6be821d, type: 3}
   m_Name: LightingSettings
   m_EditorClassIdentifier: 
-  SkyboxMaterial: {fileID: 0}
+  SkyboxMaterial: {fileID: 2100000, guid: 0ffaa0b7117ba8c47a9d05ae701d4b4d, type: 2}
   SunSource: {fileID: 0}
   LightingSource: 0
   LightingIntensityMultiplier: 1

@@ -22,7 +22,7 @@ public class LevelController : BaseLevelController
     #region Static
     public static bool LevelSuccess;
     public static bool LevelFail;
-    public static bool Tutorial;
+    public static bool LevelStarted;
     #endregion
 
     protected override void LoadLevel()
@@ -42,13 +42,13 @@ public class LevelController : BaseLevelController
          {
              ControllerHub.Get<CameraManager>().Init(target);
          }
-        EventManager.LevelStartEvent.Invoke();
-        SendLevelLoadedEvent(_levelFacade);
+         SendLevelLoadedEvent(_levelFacade);
     }
 	
     private void ResetStaticVariables()
     {
         LevelSuccess = false;
         LevelFail = false;
+        LevelStarted = false;
     }
 }

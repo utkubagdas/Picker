@@ -8,6 +8,9 @@ using UnityEngine.AI;
 public class PlayerMovementController : MonoBehaviour
 {
     
+    private PlayerFacade _playerFacade;
+    public PlayerFacade PlayerFacade => _playerFacade == null ? _playerFacade = GetComponent<PlayerFacade>() : _playerFacade;
+    
     private SwerveInputSystem _swerveInputSystem;
     public SwerveInputSystem SwerveInputSystem => _swerveInputSystem == null ? _swerveInputSystem = GetComponent<SwerveInputSystem>() : _swerveInputSystem;
 
@@ -24,17 +27,16 @@ public class PlayerMovementController : MonoBehaviour
 
     private void OnEnable()
     {
-        EventManager.LevelStartEvent.AddListener(() => IsControlable = true);
+        EventManager.LevelStartEvent.AddListener(LevelStart);
+        EventManager.LevelSuccessEvent.AddListener(LevelSuccess);
+        EventManager.LevelSuccessEvent.AddListener(LevelFail);
     }
 
     private void OnDisable()
     {
-        EventManager.LevelStartEvent.RemoveListener(() => IsControlable = true);
-    }
-
-    private void Start()
-    {
-        IsControlable = true;
+        EventManager.LevelStartEvent.RemoveListener(LevelStart);
+        EventManager.LevelStartEvent.RemoveListener(LevelSuccess);
+        EventManager.LevelStartEvent.RemoveListener(LevelFail);
     }
 
     private void FixedUpdate()
@@ -56,11 +58,45 @@ public class PlayerMovementController : MonoBehaviour
     {
         if (!IsControlable)
             return;
-
+        
+        
+        ClampTheMovement();
+        
         SwerveAmount = SwerveInputSystem.MoveFactorX * SwerveSpeed * Time.fixedDeltaTime;
         SwerveAmount = Mathf.Clamp(SwerveAmount, -MaxSwerveAmount, MaxSwerveAmount);
 
         Rigidbody.velocity = destination * Time.fixedDeltaTime * MovementSpeed;
         //transform.Translate(destination * Time.deltaTime * MovementSpeed);
+    }
+
+    public void SetControlable(bool isActive)
+    {
+        IsControlable = isActive;
+        if (!isActive)
+        {
+            Rigidbody.velocity = Vector3.zero;
+        }
+    }
+
+    private void ClampTheMovement()
+    {
+        Vector3 tempPos = transform.position;
+        tempPos.x = Mathf.Clamp(tempPos.x, -1.2f, 1.2f);
+        transform.position = tempPos;
+    }
+
+    private void LevelStart()
+    {
+        SetControlable(true);
+    }
+
+    private void LevelFail()
+    {
+        SetControlable(false);
+    }
+    
+    private void LevelSuccess()
+    {
+        SetControlable(false);
     }
 }

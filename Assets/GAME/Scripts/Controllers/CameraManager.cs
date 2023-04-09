@@ -19,7 +19,6 @@ public class CameraManager : BaseController
     private void OnEnable()
     {
         EventManager.LevelLoadedEvent.AddListener(SelectGameplayCam);
-        EventManager.LevelRedesignEvent.AddListener(SelectGameplayCam);
         EventManager.LevelSuccessEvent.AddListener(SelectSuccessCam);
         EventManager.LevelFailEvent.AddListener(SelectFailCam);
     }
@@ -27,7 +26,6 @@ public class CameraManager : BaseController
     private void OnDisable()
     {
         EventManager.LevelLoadedEvent.RemoveListener(SelectGameplayCam);
-        EventManager.LevelRedesignEvent.RemoveListener(SelectGameplayCam);
         EventManager.LevelSuccessEvent.RemoveListener(SelectSuccessCam);
         EventManager.LevelFailEvent.RemoveListener(SelectFailCam);
     }
@@ -46,7 +44,7 @@ public class CameraManager : BaseController
         //successCam.LookAt = transform1;
         gameplayCam.Follow = transform1;
         failCam.Follow = transform1;
-        failCam.LookAt = transform1;
+        //failCam.LookAt = transform1;
 
         SelectGameplayCam();
     }

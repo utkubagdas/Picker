@@ -1,9 +1,11 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class IngameUI : BaseUI
 {
+    [SerializeField] private GameObject TutorialHand;
     [SerializeField] private TextMeshProUGUI CurrentLevelText;
     [SerializeField] private TextMeshProUGUI NextLevelText;
     [SerializeField] private Image Slot1Image;
@@ -15,7 +17,6 @@ public class IngameUI : BaseUI
         EventManager.LevelLoadedEvent.AddListener(OnLevelLoaded);
         EventManager.LevelFailEvent.AddListener(OnLevelFail);
         EventManager.LevelSuccessEvent.AddListener(OnLevelSuccess);
-        EventManager.LevelRedesignEvent.AddListener(OnLevelRedesign);
         EventManager.PassedDropArea.AddListener(OnPassDropArea);
     }
 
@@ -30,6 +31,9 @@ public class IngameUI : BaseUI
     private void OnLevelLoaded(LevelLoadedEventData eventData)
     {
         SetShow();
+        ResetVariables();
+        CurrentLevelText.SetText(ControllerHub.Get<LevelController>().LevelNo.ToString());
+        NextLevelText.SetText((ControllerHub.Get<LevelController>().LevelNo + 1).ToString());
     }
 
     private void OnLevelFail()
@@ -41,10 +45,23 @@ public class IngameUI : BaseUI
     {
         SetHidden();
     }
-
-    private void OnLevelRedesign()
+    
+    public void LevelStart()
     {
-        SetShow();
+        if (LevelController.LevelStarted)
+            return;
+        LevelController.LevelStarted = true;
+        EventManager.LevelStartEvent.Invoke();
+        TutorialHand.SetActive(false);
+    }
+
+    public void ResetVariables()
+    {
+        TutorialHand.SetActive(true);
+        _passCount = 0;
+        Slot1Image.color = Color.white;
+        Slot2Image.color = Color.white;
+        Slot3Image.color = Color.white;
     }
 
     private void OnPassDropArea()

@@ -35,7 +35,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.874, y: 0}
+  m_AnchoredPosition: {x: -0.874, y: -0.389}
   m_SizeDelta: {x: 0.85198617, y: 2.431215}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &19381119
@@ -56,7 +56,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  - {fileID: -5969173100396942886, guid: ebde840f70c779d46b34750f7ec4ebd4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -106,8 +106,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: 0
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ebde840f70c779d46b34750f7ec4ebd4, type: 2}
+  m_sharedMaterial: {fileID: -5969173100396942886, guid: ebde840f70c779d46b34750f7ec4ebd4,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -167,7 +168,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: -0.049670696, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -211,7 +212,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.43, y: 0}
+  m_AnchoredPosition: {x: 0.43, y: -0.389}
   m_SizeDelta: {x: 0.8021978, y: 2.431215}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &941335845
@@ -232,7 +233,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  - {fileID: -5969173100396942886, guid: ebde840f70c779d46b34750f7ec4ebd4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -282,8 +283,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: 10
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ebde840f70c779d46b34750f7ec4ebd4, type: 2}
+  m_sharedMaterial: {fileID: -5969173100396942886, guid: ebde840f70c779d46b34750f7ec4ebd4,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -343,7 +345,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: -0.08943719, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -387,7 +389,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.20200002, y: 0}
+  m_AnchoredPosition: {x: -0.20200002, y: -0.389}
   m_SizeDelta: {x: 0.8682847, y: 2.431215}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &1498868248
@@ -408,7 +410,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  - {fileID: -5969173100396942886, guid: ebde840f70c779d46b34750f7ec4ebd4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -458,8 +460,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: /
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ebde840f70c779d46b34750f7ec4ebd4, type: 2}
+  m_sharedMaterial: {fileID: -5969173100396942886, guid: ebde840f70c779d46b34750f7ec4ebd4,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -539,7 +542,8 @@ GameObject:
   - component: {fileID: 2763853166293357911}
   - component: {fileID: 5822165247880035913}
   - component: {fileID: 5240563764271189503}
-  m_Layer: 0
+  - component: {fileID: 941768004856648168}
+  m_Layer: 10
   m_Name: yol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -607,6 +611,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &941768004856648168
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3892085688843401294}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3.9162645, y: 0.3, z: 3.3306792}
+  m_Center: {x: -0.000000059604645, y: -0.3575618, z: 1.6653396}
 --- !u!1 &4019955805091454375
 GameObject:
   m_ObjectHideFlags: 0
@@ -618,6 +635,9 @@ GameObject:
   - component: {fileID: 7557693390189443787}
   - component: {fileID: 8379104216710379461}
   - component: {fileID: 4237060114704306264}
+  - component: {fileID: 7547649738942405448}
+  - component: {fileID: 7781234824337348492}
+  - component: {fileID: 8438480480506111156}
   m_Layer: 0
   m_Name: kenar.001
   m_TagString: Untagged
@@ -686,6 +706,49 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!64 &7547649738942405448
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4019955805091454375}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -5429496706014041597, guid: 4c5e1ae6627917f4aa9365142eb8ecab, type: 3}
+--- !u!54 &7781234824337348492
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4019955805091454375}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 3
+--- !u!65 &8438480480506111156
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4019955805091454375}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3.5086136, y: 1.8872676, z: 0.14880466}
+  m_Center: {x: -0.00000023841858, y: 0.7936337, z: 2.5292788}
 --- !u!1 &4800756015974683919
 GameObject:
   m_ObjectHideFlags: 0
@@ -732,6 +795,7 @@ GameObject:
   - component: {fileID: 8936658002785391356}
   - component: {fileID: 7281610029935929599}
   - component: {fileID: 5898072904756990466}
+  - component: {fileID: 2589761671602443819}
   m_Layer: 0
   m_Name: yol.002
   m_TagString: Untagged
@@ -800,6 +864,20 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!64 &2589761671602443819
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4854695274066951523}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 3919549284470138641, guid: 4c5e1ae6627917f4aa9365142eb8ecab, type: 3}
 --- !u!1 &6367480700027567377
 GameObject:
   m_ObjectHideFlags: 0
@@ -933,6 +1011,9 @@ MonoBehaviour:
   DesiredDropCountText: {fileID: 941335844}
   DroppedCount: 0
   DesiredCount: 0
+  RoadMesh: {fileID: 3892085688843401294}
+  Gate1: {fileID: 6880433833066048976}
+  Gate2: {fileID: 6367480700027567377}
 --- !u!65 &8418255470124655275
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -944,8 +1025,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 3.9979858, y: 2.675912, z: 1.8506403}
-  m_Center: {x: -0.016479969, y: 0.83795595, z: -0.42532015}
+  m_Size: {x: 3.9979858, y: 2.932238, z: 0.10345662}
+  m_Center: {x: -0.016479969, y: 0.70979285, z: -0.06657249}
 --- !u!54 &2304386624143280315
 Rigidbody:
   m_ObjectHideFlags: 0
