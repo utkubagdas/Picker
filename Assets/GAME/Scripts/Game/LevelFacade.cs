@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class LevelFacade : MonoBehaviour
 {
-    public GameObject Player;
+    public GameObject PlayerSpawnPoint;
 }

@@ -25,14 +25,18 @@ public class BaseLevelController : BaseController
     public bool DebugMode;
     [FoldoutGroup("Debug"), PropertyOrder(100), InlineEditor, GUIColor("GetDebugModeColor")]
     public LevelContent LevelContent;
+    [FoldoutGroup("Debug"), PropertyOrder(100), InlineEditor, GUIColor("GetDebugModeColor")]
+    public LevelContent LevelContent2;
     [FoldoutGroup("Debug"), PropertyOrder(100), ReadOnly, GUIColor("GetDebugModeColor")]
     public int LevelNo;
+
+    public bool OneTourCompleted;
     #endregion
 
     [SerializeField]
     private Transform _levelParent;
 
-    private readonly List<Object> _destroyOnResetList = new List<Object>();
+    public List<Object> _destroyOnResetList = new List<Object>();
 
     #region ODIN
 #if UNITY_EDITOR
@@ -90,39 +94,73 @@ public class BaseLevelController : BaseController
         if (!DebugMode)
         {
             LevelContent = GetLevelContent();
+            LevelContent2 = GetNextLevelContent();
         }
         UpdateLightingSettings();
     }
 
-    private LevelContent GetLevelContent()
+    protected virtual LevelContent GetLevelContent()
     {
         LevelSaveManager levelSaveManager = ControllerHub.Get<DataManager>().LevelSaveManager;
         LevelNo = levelSaveManager.CurrentLevelNo;
         int currentLevelIndex = levelSaveManager.CurrentLevelIndex;
-        if (LevelNo - 1 < allLevels.Count)
+        if (currentLevelIndex < allLevels.Count)
         {
             return allLevels[currentLevelIndex];
         }
-        return levelsToRepeat[currentLevelIndex];
+        levelSaveManager.SetCurrentLevelIndex(0);
+        return allLevels[0];
+        //return levelsToRepeat[currentLevelIndex];
+    }
+    
+    protected virtual LevelContent GetNextLevelContent()
+    {
+        LevelSaveManager levelSaveManager = ControllerHub.Get<DataManager>().LevelSaveManager;
+        LevelNo = levelSaveManager.CurrentLevelNo;
+        int currentLevelIndex = levelSaveManager.CurrentLevelIndex;
+        if (!OneTourCompleted)
+        {
+            if (currentLevelIndex + 1 < allLevels.Count)
+            {
+                return allLevels[currentLevelIndex + 1];
+            }
+        }
+        else
+        {
+            if (currentLevelIndex < allLevels.Count)
+            {
+                Debug.Log(currentLevelIndex);
+                return allLevels[currentLevelIndex];
+            }
+        }
+
+        if (!OneTourCompleted)
+        {
+            OneTourCompleted = true;
+        }
+        levelSaveManager.SetCurrentLevelIndex(0);
+        return allLevels[0];
     }
 
     /// <summary>
     /// Increases and saves LevelNo.
     /// </summary>
-    private void IncreaseLevelNo()
+    protected virtual void IncreaseLevelNo()
     {
         LevelSaveManager levelSaveManager = ControllerHub.Get<DataManager>().LevelSaveManager;
-        if (levelSaveManager.CurrentLevelNo >= allLevels.Count)
+        if (levelSaveManager.CurrentLevelIndex >= allLevels.Count)
         {
-            List<int> loop = levelSaveManager.LevelIndicesToRepeat;
-            if (loop.Count == 0)
-            {
-                loop = Enumerable.Range(0, levelsToRepeat.Count).ToList();
-                loop.Shuffle();
-            }
-            levelSaveManager.SetCurrentLevelIndex(loop[0], false);
-            loop.RemoveAt(0);
-            levelSaveManager.SetLevelIndicesToRepeat(loop, false);
+            // List<int> loop = levelSaveManager.LevelIndicesToRepeat;
+            // if (loop.Count == 0)
+            // {
+            //     loop = Enumerable.Range(0, levelsToRepeat.Count).ToList();
+            //     loop.Shuffle();
+            // }
+            // levelSaveManager.SetCurrentLevelIndex(loop[0], false);
+            // loop.RemoveAt(0);
+            // levelSaveManager.SetLevelIndicesToRepeat(loop, false);
+            
+            levelSaveManager.SetCurrentLevelIndex(0);
         }
         else
         {
@@ -130,6 +168,23 @@ public class BaseLevelController : BaseController
         }
         levelSaveManager.SetCurrentLevelNo(levelSaveManager.CurrentLevelNo + 1, false);
         levelSaveManager.SaveData();
+    }
+
+    protected virtual void DecreaseLevelNo()
+    {
+        LevelSaveManager levelSaveManager = ControllerHub.Get<DataManager>().LevelSaveManager;
+        if (levelSaveManager.CurrentLevelIndex - 1 <= 0)
+        {
+
+            return;
+        }
+        levelSaveManager.SetCurrentLevelIndex(levelSaveManager.CurrentLevelIndex + - 1, false);
+        levelSaveManager.SaveData();
+    }
+
+    protected virtual void LevelContinue()
+    {
+        IncreaseLevelNo();
     }
 
     /// <summary>
@@ -252,9 +307,14 @@ public class BaseLevelController : BaseController
         levelsToRepeat.Add(levelContent);
     }
 
-    public int GetLevelIndex()
+    public int GetTotalLevelIndex()
     {
         return allLevels.Count - 1;
+    }
+
+    public int GetCurrentLevelIndex()
+    {
+        return ControllerHub.Get<DataManager>().LevelSaveManager.CurrentLevelIndex;
     }
 
     public int GetTotalLevelCount()

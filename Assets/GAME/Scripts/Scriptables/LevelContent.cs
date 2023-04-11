@@ -8,4 +8,6 @@ public class LevelContent : ScriptableObject
 	
     [InlineEditor]
     public LightingSettings LightingSettings;
+
+    public float LevelSizeZ;
 }

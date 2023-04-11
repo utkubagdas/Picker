@@ -2563,13 +2563,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   allLevels:
-  - {fileID: 11400000, guid: 931d13d849b556145b54f0f7d56eef6c, type: 2}
+  - {fileID: 11400000, guid: a5c47966e4c8def4395482d592905447, type: 2}
+  - {fileID: 11400000, guid: 5f4633e9d79d77e40abfb96904160985, type: 2}
+  - {fileID: 11400000, guid: cbab862da589d3c4bb248d693ec91ebd, type: 2}
+  - {fileID: 11400000, guid: c3a909f21bf203648b5a3ffd28c8f17b, type: 2}
+  - {fileID: 11400000, guid: e046f0087f63e5e4ca7ca7125c0e48fa, type: 2}
+  - {fileID: 11400000, guid: 32ee931bd61becb45828dddb4f4910e2, type: 2}
+  - {fileID: 11400000, guid: d33e8b5975ef5624abebb0846532c269, type: 2}
+  - {fileID: 11400000, guid: f7a3d39ff50948041978d3f745fe29fc, type: 2}
+  - {fileID: 11400000, guid: 16f28c7450d6c8640930eaff4624768f, type: 2}
+  - {fileID: 11400000, guid: 8ed59bb722573a248aaa6933af9b11d3, type: 2}
   levelsToRepeat:
-  - {fileID: 11400000, guid: 931d13d849b556145b54f0f7d56eef6c, type: 2}
+  - {fileID: 11400000, guid: a5c47966e4c8def4395482d592905447, type: 2}
+  - {fileID: 11400000, guid: 5f4633e9d79d77e40abfb96904160985, type: 2}
+  - {fileID: 11400000, guid: cbab862da589d3c4bb248d693ec91ebd, type: 2}
+  - {fileID: 11400000, guid: c3a909f21bf203648b5a3ffd28c8f17b, type: 2}
+  - {fileID: 11400000, guid: e046f0087f63e5e4ca7ca7125c0e48fa, type: 2}
+  - {fileID: 11400000, guid: 32ee931bd61becb45828dddb4f4910e2, type: 2}
+  - {fileID: 11400000, guid: d33e8b5975ef5624abebb0846532c269, type: 2}
+  - {fileID: 11400000, guid: f7a3d39ff50948041978d3f745fe29fc, type: 2}
+  - {fileID: 11400000, guid: 16f28c7450d6c8640930eaff4624768f, type: 2}
+  - {fileID: 11400000, guid: 8ed59bb722573a248aaa6933af9b11d3, type: 2}
   DebugMode: 0
   LevelContent: {fileID: 0}
+  LevelContent2: {fileID: 0}
   LevelNo: 1
+  OneTourCompleted: 0
   _levelParent: {fileID: 1361706934}
+  _destroyOnResetList: []
 --- !u!4 &1546667371
 Transform:
   m_ObjectHideFlags: 0
@@ -2714,7 +2735,7 @@ PrefabInstance:
     - target: {fileID: 8627336132747572365, guid: 23e2e3ca9c7f54e4696dd39007d8a5b8,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: RestartLevel
+      value: LevelContinueButton
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 23e2e3ca9c7f54e4696dd39007d8a5b8, type: 3}

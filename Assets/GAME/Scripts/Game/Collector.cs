@@ -5,9 +5,14 @@ using UnityEngine;
 
 public class Collector : MonoBehaviour
 {
+    #region Property
     private PlayerFacade _playerFacade;
     public PlayerFacade PlayerFacade => _playerFacade == null ? _playerFacade = GetComponent<PlayerFacade>() : _playerFacade;
+    #endregion
+    
+    #region Public
     public List<Collectable> Collectables = new List<Collectable>();
+    #endregion
     private void OnTriggerEnter(Collider other)
     {
         Collectable collectable = other.GetComponent<Collectable>();
@@ -16,6 +21,7 @@ public class Collector : MonoBehaviour
         if (collectable != null)
         {
             Collectables.Add(collectable);
+            collectable.IsCollected = true;
         }
 
         if (propellerUpgrade != null)

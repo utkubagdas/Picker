@@ -7,7 +7,7 @@ using UnityEngine.AI;
 
 public class PlayerMovementController : MonoBehaviour
 {
-    
+    #region Property
     private PlayerFacade _playerFacade;
     public PlayerFacade PlayerFacade => _playerFacade == null ? _playerFacade = GetComponent<PlayerFacade>() : _playerFacade;
     
@@ -16,7 +16,9 @@ public class PlayerMovementController : MonoBehaviour
 
     private Rigidbody _rigidbody;
     public Rigidbody Rigidbody => _rigidbody == null ? _rigidbody = GetComponent<Rigidbody>() : _rigidbody;
-
+    #endregion
+    
+    #region Serialized
     [Title("Movement Settings")]
     public bool IsControlable = false;
     public float SwerveSpeed = 0.5f;
@@ -24,19 +26,29 @@ public class PlayerMovementController : MonoBehaviour
     public float MovementSpeed = 10f;
     [ReadOnly]
     public float SwerveAmount;
+    #endregion
 
+   
     private void OnEnable()
     {
         EventManager.LevelStartEvent.AddListener(LevelStart);
         EventManager.LevelSuccessEvent.AddListener(LevelSuccess);
-        EventManager.LevelSuccessEvent.AddListener(LevelFail);
+        EventManager.LevelFailEvent.AddListener(LevelFail);
+        EventManager.PassedDropArea.AddListener(() =>
+        {
+            SetControlable(true);
+        });
     }
 
     private void OnDisable()
     {
         EventManager.LevelStartEvent.RemoveListener(LevelStart);
-        EventManager.LevelStartEvent.RemoveListener(LevelSuccess);
-        EventManager.LevelStartEvent.RemoveListener(LevelFail);
+        EventManager.LevelSuccessEvent.RemoveListener(LevelSuccess);
+        EventManager.LevelFailEvent.RemoveListener(LevelFail);
+        EventManager.PassedDropArea.RemoveListener(() =>
+        {
+            SetControlable(true);
+        });
     }
 
     private void FixedUpdate()

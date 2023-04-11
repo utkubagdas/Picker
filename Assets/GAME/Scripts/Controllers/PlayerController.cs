@@ -7,10 +7,16 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    #region Property
     private PlayerFacade _playerFacade;
     public PlayerFacade PlayerFacade => _playerFacade == null ? _playerFacade = GetComponent<PlayerFacade>() : _playerFacade;
+    #endregion
 
-    private Vector3 _propellerRot = new Vector3(-90,0,360);
+    #region Local
+    private readonly Vector3 _propellerRot = new Vector3(-90,0,360);
+    private bool _tweenActive;
+    #endregion
+    
     
 
     private void OnTriggerEnter(Collider other)
@@ -19,20 +25,22 @@ public class PlayerController : MonoBehaviour
 
         if (dropAreaController != null)
         {
+            TurnOffThePropellers();
             PlayerFacade.PlayerMovementController.SetControlable(false);
-            EventManager.PassedDropArea.Invoke();
             int layerIndex = LayerMask.NameToLayer("DroppedCollectable");
             dropAreaController.IncreaseDroppedCountText(PlayerFacade.Collector.Collectables.Count);
             foreach (var collectable in PlayerFacade.Collector.Collectables)
             {
                 collectable.gameObject.layer = layerIndex;
-                collectable.GetComponent<Rigidbody>().AddForce(Vector3.forward * 5, ForceMode.Impulse);
+                collectable.GetComponent<Rigidbody>().AddForce(Vector3.forward * 10, ForceMode.Impulse);
                 
             }
             dropAreaController.SetDroppedCount(PlayerFacade.Collector.Collectables.Count);
+            PlayerFacade.Collector.Collectables.Clear();
             if (dropAreaController.GetStatus())
             {
-                this.Run(1.5f, () => NewRoadMovement(dropAreaController));
+                this.Run(0.5f, () => dropAreaController.DestroyDroppedItems());
+                this.Run(1.5f, () => dropAreaController.NewRoadMovement());
             }
             else
             {
@@ -42,29 +50,32 @@ public class PlayerController : MonoBehaviour
 
         if (other.CompareTag(Consts.Tags.FINISHLINE))
         {
-            EventManager.LevelSuccessEvent.Invoke();
+            PlayerFacade.PlayerMovementController.SetControlable(false);
+            transform.DOMove(ControllerHub.Get<LevelController>().NextLevelFacade.PlayerSpawnPoint.transform.position, 1.5f).OnComplete(
+                () =>
+                {
+                    EventManager.LevelSuccessEvent.Invoke();
+                });
         }
-    }
-
-    private void NewRoadMovement(DropAreaController dropAreaController)
-    {
-        dropAreaController.RoadMesh.transform.DOLocalMoveY(0.208f, 0.1f).OnComplete(() =>
-        {
-            Sequence seq = DOTween.Sequence();
-            seq.Join(dropAreaController.Gate1.transform.DORotate(new Vector3(0, 0, 70), 0.25f).SetEase(Ease.Linear));
-            seq.Join(dropAreaController.Gate2.transform.DORotate(new Vector3(0, 0, -70), 0.25f).SetEase(Ease.Linear)).OnComplete(() =>
-            {
-                PlayerFacade.PlayerMovementController.SetControlable(true);  
-            });
-        });
     }
 
     public void TurnOnThePropellers()
     {
         PlayerFacade.Propeller1.SetActive(true);
         PlayerFacade.Propeller2.SetActive(true);
-        PlayerFacade.Propeller1.transform.DOLocalRotate(_propellerRot, 0.25f).SetLoops(-1, LoopType.Incremental).SetEase(Ease.Linear);
-        PlayerFacade.Propeller2.transform.DOLocalRotate(_propellerRot, 0.25f).SetLoops(-1, LoopType.Incremental).SetEase(Ease.Linear);
+        if (!_tweenActive)
+        {
+            PlayerFacade.Propeller1.transform.DOLocalRotate(_propellerRot, 0.25f).SetLoops(-1, LoopType.Incremental)
+                .SetEase(Ease.Linear);
+            PlayerFacade.Propeller2.transform.DOLocalRotate(_propellerRot, 0.25f).SetLoops(-1, LoopType.Incremental)
+                .SetEase(Ease.Linear);
+            _tweenActive = true;
+        }
+    }
 
+    public void TurnOffThePropellers()
+    {
+        PlayerFacade.Propeller1.SetActive(false);
+        PlayerFacade.Propeller2.SetActive(false);
     }
 }

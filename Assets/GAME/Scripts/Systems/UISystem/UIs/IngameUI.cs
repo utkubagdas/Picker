@@ -18,6 +18,7 @@ public class IngameUI : BaseUI
         EventManager.LevelFailEvent.AddListener(OnLevelFail);
         EventManager.LevelSuccessEvent.AddListener(OnLevelSuccess);
         EventManager.PassedDropArea.AddListener(OnPassDropArea);
+        EventManager.LevelContinueEvent.AddListener(LevelContinue);
     }
 
     private void OnDisable()
@@ -26,6 +27,7 @@ public class IngameUI : BaseUI
         EventManager.LevelFailEvent.RemoveListener(OnLevelFail);
         EventManager.LevelSuccessEvent.RemoveListener(OnLevelSuccess);
         EventManager.PassedDropArea.RemoveListener(OnPassDropArea);
+        EventManager.LevelContinueEvent.RemoveListener(LevelContinue);
     }
 
     private void OnLevelLoaded(LevelLoadedEventData eventData)
@@ -43,6 +45,7 @@ public class IngameUI : BaseUI
 
     private void OnLevelSuccess()
     {
+        ResetVariables();
         SetHidden();
     }
     
@@ -62,6 +65,13 @@ public class IngameUI : BaseUI
         Slot1Image.color = Color.white;
         Slot2Image.color = Color.white;
         Slot3Image.color = Color.white;
+    }
+
+    private void LevelContinue()
+    {
+        CurrentLevelText.SetText(ControllerHub.Get<LevelController>().LevelNo.ToString());
+        NextLevelText.SetText((ControllerHub.Get<LevelController>().LevelNo + 1).ToString());
+        SetShow();
     }
 
     private void OnPassDropArea()

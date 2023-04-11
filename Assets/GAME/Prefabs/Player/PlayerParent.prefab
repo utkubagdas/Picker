@@ -499,7 +499,7 @@ MonoBehaviour:
   IsControlable: 0
   SwerveSpeed: 100
   MaxSwerveAmount: 3
-  MovementSpeed: 2500
+  MovementSpeed: 5000
   SwerveAmount: 0
 --- !u!54 &-3587684916299652981
 Rigidbody:

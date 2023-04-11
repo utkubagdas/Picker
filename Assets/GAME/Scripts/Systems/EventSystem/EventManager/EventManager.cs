@@ -4,7 +4,7 @@ public static class EventManager
 {
     #region GameCycleEvents
     public static readonly UnityEvent LevelStartEvent = new UnityEvent();
-    public static readonly UnityEvent StageStartEvent = new UnityEvent();
+    public static readonly UnityEvent LevelContinueEvent = new UnityEvent();
     public static readonly UnityEvent LevelSuccessEvent = new UnityEvent();
     public static readonly UnityEvent LevelFailEvent = new UnityEvent();
     public static readonly UnityEvent LevelResetEvent = new UnityEvent();

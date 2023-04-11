@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 160147f8edecdf7479b6d628e30e8e08, type: 3}
   m_Name: Level1
   m_EditorClassIdentifier: 
-  LevelFacade: {fileID: 93699189264566936, guid: b08c92deeb18ffd469ba9580f635a81f,
+  LevelFacade: {fileID: 1751192483065962012, guid: 29c62970477090f42a406c4689825546,
     type: 3}
   LightingSettings: {fileID: 11400000, guid: 3a21d39e1d4fc2545b5fee3bef58f08d, type: 2}
+  LevelSizeZ: 68.321724

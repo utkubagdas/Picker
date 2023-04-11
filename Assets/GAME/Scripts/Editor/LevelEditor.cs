@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 
 public class LevelEditor : EditorWindow
 {
-
+    #region Local
     private ObjectType _objectType;
     private PlatformType _platformType;
     private CollectableType _collectableType;
@@ -21,17 +21,22 @@ public class LevelEditor : EditorWindow
     private float _offset;
     private LevelController _levelController;
     private GameObject _levelHolder;
+    private GameObject _collectableHolder;
+    private GameObject _platformHolder;
     private bool _hasLevelEnd;
     private bool _levelRepeat;
     private int _desiredDropCount = 1;
     private bool _designLevel;
     private bool _editLevel;
-    
     private GameObject _shownLevel;
     private int _levelIndex;
     private bool _hasSceneChanged;
     private Transform _selectedTransform;
     private int _dropAreaCount;
+    private float _levelSizeZ;
+    private GameObject _playerSpawnPoint;
+    #endregion
+
     
     
     void OnEnable()
@@ -86,6 +91,7 @@ public class LevelEditor : EditorWindow
             {
                 var collectable = PrefabUtility.InstantiatePrefab(GetPrefab(_collectableType, GetCollectablePrefabName(_collectableType)), _levelHolder.transform) as GameObject;
                 _collectables.Add(collectable);
+                collectable.transform.SetParent(_collectableHolder.transform);
                 if (!(collectable is null)) collectable.transform.position = hit.point;
             }
         }
@@ -145,6 +151,13 @@ public class LevelEditor : EditorWindow
             if (_levelHolder == null)
             {
                 _levelHolder = new GameObject("LevelHolder");
+                _playerSpawnPoint = new GameObject("PlayerSpawnPoint");
+                _collectableHolder = new GameObject("Collectables");
+                _platformHolder = new GameObject("Platforms");
+                _collectableHolder.transform.SetParent(_levelHolder.transform);
+                _platformHolder.transform.SetParent(_levelHolder.transform);
+                _playerSpawnPoint.transform.SetParent(_levelHolder.transform);
+                _playerSpawnPoint.transform.position = new Vector3(0, 0.073f, 3f);
             }
         
             GUILayout.BeginArea(new Rect(0, 0, Screen.width, Screen.height));
@@ -171,9 +184,12 @@ public class LevelEditor : EditorWindow
                     {
                         var gameObject = PrefabUtility.InstantiatePrefab(GetPrefab(_platformType, "StraightPlatform"),_levelHolder.transform) as GameObject;
                         gameObject.transform.position = Vector3.forward * _offset;
-                        _offset += gameObject.GetComponentInChildren<MeshRenderer>().bounds.size.z;
+                        gameObject.transform.SetParent(_platformHolder.transform);
+                        MeshRenderer goMesh = gameObject.GetComponentInChildren<MeshRenderer>();
+                        _offset += goMesh.bounds.size.z;
                         _platforms.Add(gameObject);
                         _allRoads.Add(gameObject);
+                        _levelSizeZ += goMesh.bounds.size.z;
                     } 
                 }
                 else if (_platformType == PlatformType.DropAreaPlatform)
@@ -189,11 +205,14 @@ public class LevelEditor : EditorWindow
                         var gameObject = PrefabUtility.InstantiatePrefab(GetPrefab(_platformType, "DropAreaPlatform"), _levelHolder.transform) as GameObject;
                         var dropArea = gameObject.GetComponent<DropAreaController>();
                         gameObject.transform.position = Vector3.forward * _offset;
+                        gameObject.transform.SetParent(_platformHolder.transform);
                         dropArea.SetDesiredDropCountText(_desiredDropCount);
                         dropArea.SetDesiredCount(_desiredDropCount);
-                        _offset += gameObject.GetComponentInChildren<MeshRenderer>().bounds.size.z;
+                        MeshRenderer goMesh = gameObject.GetComponentInChildren<MeshRenderer>();
+                        _offset += goMesh.bounds.size.z;
                         _allRoads.Add(gameObject);
                         _dropAreaCount++;
+                        _levelSizeZ += goMesh.bounds.size.z;
                     } 
                 }
                 else if (_platformType == PlatformType.LevelEndPlatform)
@@ -202,8 +221,11 @@ public class LevelEditor : EditorWindow
                     {
                         var gameObject = PrefabUtility.InstantiatePrefab(GetPrefab(_platformType, "LevelEndPlatform"),_levelHolder.transform) as GameObject;
                         gameObject.transform.position = Vector3.forward * _offset;
-                        _offset += gameObject.GetComponentInChildren<MeshRenderer>().bounds.size.z;
+                        gameObject.transform.SetParent(_platformHolder.transform);
+                        MeshRenderer goMesh = gameObject.GetComponentInChildren<MeshRenderer>();
+                        _offset += goMesh.bounds.size.z;
                         _allRoads.Add(gameObject);
+                        _levelSizeZ += goMesh.bounds.size.z;
                         if (!_hasLevelEnd)
                         {
                             _hasLevelEnd = true;
@@ -354,6 +376,26 @@ public class LevelEditor : EditorWindow
                         _manualCollectable = true;
                     }
                 }
+
+                if (_collectableType == CollectableType.Propeller)
+                {
+                    if (_selected == 1)
+                    {
+                        EditorGUILayout.HelpBox("You can instantiate collectable by left click on the platform.", MessageType.Info);
+                        GUILayout.Space(10);
+                        EditorGUILayout.HelpBox("You can delete collectable by right-clicking on the collectable.", MessageType.Info);
+                        if (_platforms.Count <= 0)
+                        {
+                            GUILayout.Space(10);
+                            EditorGUILayout.HelpBox("Before you can create a Collectable, you must create a platform!", MessageType.Error);
+                        }
+                        _manualCollectable = true;
+                    }
+                    else if (_selected == 0)
+                    {
+                        EditorGUILayout.HelpBox("You cannot randomly generate the propeller.", MessageType.Error);
+                    }
+                }
             }
 
             if (_allRoads.Count > 0 && _platforms.Count > 0 && _collectables.Count > 0 && _hasLevelEnd && _dropAreaCount == 3)
@@ -371,22 +413,24 @@ public class LevelEditor : EditorWindow
                 GUILayout.Space(10);
                 if (GUILayout.Button("Create Level"))
                 {
-                    GameObject player = PrefabUtility.InstantiatePrefab(
-                        AssetDatabase.LoadAssetAtPath<GameObject>(Consts.LevelEditorSettings.PLAYERPREFABPATH), _levelHolder.transform) as GameObject;
-                    player.transform.position = new Vector3(0, 0.073f, 3f);
+                    // GameObject player = PrefabUtility.InstantiatePrefab(
+                    //     AssetDatabase.LoadAssetAtPath<GameObject>(Consts.LevelEditorSettings.PLAYERPREFABPATH), _levelHolder.transform) as GameObject;
+                    // player.transform.position = new Vector3(0, 0.073f, 3f);
                     LevelFacade levelFacade = _levelHolder.AddComponent<LevelFacade>();
-                    levelFacade.Player = player;
+                    levelFacade.PlayerSpawnPoint = _playerSpawnPoint;
+                    //levelFacade.Player = player;
                     
                     
                     GameObject levelPrefab =
-                        PrefabUtility.SaveAsPrefabAsset(_levelHolder, Consts.LevelEditorSettings.LEVELFACADESPATH + "Level" + (_levelController.GetLevelIndex() + 2) + ".prefab");
+                        PrefabUtility.SaveAsPrefabAsset(_levelHolder, Consts.LevelEditorSettings.LEVELFACADESPATH + "Level" + (_levelController.GetTotalLevelIndex() + 2) + ".prefab");
                     LevelFacade levelFacade2 = levelPrefab.GetComponent<LevelFacade>();
                     
                     
                     LevelContent levelContent = ScriptableObject.CreateInstance<LevelContent>();
+                    levelContent.LevelSizeZ = _levelSizeZ;
                     levelContent.LevelFacade = levelFacade2;
                     levelContent.LightingSettings = AssetDatabase.LoadAssetAtPath<LightingSettings>("Assets/GAME/ScriptableObjects/LightingSettings/LightingSettings.asset");
-                    AssetDatabase.CreateAsset(levelContent, Consts.LevelEditorSettings.LEVELCONTENTSPATH + "Level" + (_levelController.GetLevelIndex() + 2) + ".asset");
+                    AssetDatabase.CreateAsset(levelContent, Consts.LevelEditorSettings.LEVELCONTENTSPATH + "Level" + (_levelController.GetTotalLevelIndex() + 2) + ".asset");
                     AssetDatabase.SaveAssets();
                     _levelController.AddLevelFromLevelEditor(levelContent);
                     if (_levelRepeat)
@@ -507,9 +551,10 @@ public class LevelEditor : EditorWindow
                     {
                         Vector3 randomPosition = new Vector3(Random.Range(minX, maxX), position1.y ,Random.Range(minZ, maxZ));
                         var collectable = PrefabUtility.InstantiatePrefab(GetPrefab(_collectableType, typeName),_levelHolder.transform) as GameObject;
-
+                    
                         _collectables.Add(collectable);
                         if (!(collectable is null)) collectable.transform.position = randomPosition;
+                        collectable.transform.SetParent(_collectableHolder.transform);
                     }
                 }
 
@@ -550,6 +595,9 @@ public class LevelEditor : EditorWindow
             case CollectableType.Sphere:
                 String colType4 = Consts.LevelEditorSettings.CollectableSpherePrefabName;
                 return colType4;
+            case CollectableType.Propeller:
+                String colType5 = Consts.LevelEditorSettings.CollectablePropellerPrefabName;
+                return colType5;
             default:
                 return null;
         }
@@ -605,7 +653,8 @@ public class LevelEditor : EditorWindow
         Cube,
         Sphere,
         Capsule,
-        Cylinder
+        Cylinder,
+        Propeller
     }
 
     
